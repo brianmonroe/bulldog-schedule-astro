@@ -106,6 +106,25 @@ select {
   color: var(--green-2);
   font-style: normal;
 }
+.sponsor {
+  width: min(100%, 720px);
+  margin-top: 36px;
+}
+.sponsor p {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.sponsor img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px #173c2c14;
+}
 .intro {
   max-width: 460px;
   margin: 26px 0 0;
@@ -327,6 +346,47 @@ select {
   padding-left: 8px;
   font-size: 11px;
   color: #725227;
+}
+.stream-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 11px;
+  border: 1px solid var(--green);
+  border-radius: 999px;
+  padding: 6px 9px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+.stream-link:hover {
+  background: var(--green);
+  color: white;
+}
+.stream-link:focus-visible {
+  outline: 3px solid #0b583e45;
+  outline-offset: 2px;
+}
+.stream-link svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+.stream-link svg path {
+  fill: currentColor;
+  stroke: none;
+}
+.stream-link.youtube {
+  border-color: #c5221f;
+  color: #b51d1a;
+}
+.stream-link.youtube:hover {
+  background: #b51d1a;
+  color: white;
 }
 .status-card {
   padding: 48px 20px;

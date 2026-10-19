@@ -70,6 +70,7 @@
   .site-header,
   .hero,
   .filter-panel,
+  .stream-link,
   footer,
   .status-card {
     display: none !important;

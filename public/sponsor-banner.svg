@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220" viewBox="0 0 1200 220" role="img" aria-labelledby="title desc">
+  <title id="title">Sponsor banner placeholder</title>
+  <desc id="desc">Replace this file with the schedule sponsor's banner artwork.</desc>
+  <rect width="1200" height="220" rx="20" fill="#063f2e"/>
+  <path d="M0 176 330 0h175L95 220H0Zm775 44L1200 0v112L990 220H775Z" fill="#fff" opacity=".06"/>
+  <circle cx="98" cy="110" r="52" fill="none" stroke="#fff" stroke-width="4"/>
+  <text x="98" y="129" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="54" font-weight="700">C</text>
+  <text x="178" y="100" fill="#fff" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="5">SPONSORSHIP PLACEMENT</text>
+  <text x="178" y="137" fill="#fff" opacity=".72" font-family="Arial, sans-serif" font-size="18">Replace public/sponsor-banner.svg with sponsor artwork</text>
+</svg>

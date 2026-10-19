@@ -32,6 +32,10 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
       <section class="hero shell">
         <p class="eyebrow">Celina Athletics</p>
         <h1>Winter 2026/2027<br /><em>Schedule</em></h1>
+        <aside class="sponsor" aria-label="Schedule sponsor">
+          <p>Brought to you by</p>
+          <img src={`${base}sponsor-banner.svg`} alt="Sponsor banner" width="1200" height="220" />
+        </aside>
       </section>
 
       <section class="schedule shell" aria-labelledby="schedule-title">
