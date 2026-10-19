@@ -445,6 +445,21 @@ footer p {
   font-size: 11px;
   color: #b8c8c1;
 }
+.footer-meta {
+  text-align: right;
+}
+.footer-meta p {
+  text-align: inherit;
+}
+.footer-meta a {
+  display: inline-block;
+  margin-top: 7px;
+  border-bottom: 1px solid #ffffff60;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
 .sr-only {
   position: absolute;
   width: 1px;

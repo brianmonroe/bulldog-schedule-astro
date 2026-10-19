@@ -79,7 +79,7 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
       </section>
     </main>
 
-    <footer><div class="shell"><span>Go Bulldogs</span><p>Schedule data updates automatically from the athletics calendar.</p></div></footer>
+    <footer><div class="shell"><span>Go Bulldogs</span><div class="footer-meta"><p>Schedule data updates automatically from the athletics calendar.</p><a href={`${base}guide/`}>Admin guide</a></div></div></footer>
     <script is:inline src={`${base}schedule.js`}></script>
   </body>
 </html>

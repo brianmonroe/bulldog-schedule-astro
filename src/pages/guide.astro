@@ -1,0 +1,144 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const sheetUrl = 'https://docs.google.com/spreadsheets/d/1snbFWCy--RdWyz9WI2CsbsCmktSK7Ln427iE9WOlmpE/edit?gid=1559160550#gid=1559160550';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Administrator guide for maintaining the Celina Bulldogs athletics schedule." />
+    <meta name="theme-color" content="#063f2e" />
+    <title>Schedule Admin Guide | Bulldog Athletics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href={`${base}styles.css`} />
+    <link rel="stylesheet" href={`${base}guide.css`} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a href={base} class="brand" aria-label="Return to Bulldog Schedule">
+          <span class="brand-mark" aria-hidden="true">C</span>
+          <span><strong>Bulldog</strong><small>Athletics</small></span>
+        </a>
+        <a class="back-link" href={base}>View schedule</a>
+      </div>
+    </header>
+
+    <main class="guide shell">
+      <header class="guide-hero">
+        <p class="eyebrow">Administrator reference</p>
+        <h1>Schedule guide</h1>
+        <p>How the public schedule works, how to update an event, and what to check when something doesn’t look right.</p>
+        <a class="primary-link" href={sheetUrl} target="_blank" rel="noopener noreferrer">Open schedule spreadsheet <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <aside class="guide-callout">
+        <strong>Most updates do not require a site deployment.</strong>
+        <p>Edit the Google Sheet, keep the column headers intact, and the public schedule will read the latest published CSV the next time it loads.</p>
+      </aside>
+
+      <nav class="guide-nav" aria-label="Guide sections">
+        <a href="#workflow">How it works</a>
+        <a href="#events">Add or update an event</a>
+        <a href="#streams">Add a stream</a>
+        <a href="#fields">Field reference</a>
+        <a href="#troubleshooting">Troubleshooting</a>
+      </nav>
+
+      <section id="workflow" class="guide-section">
+        <p class="section-number">01</p>
+        <div>
+          <h2>How it works</h2>
+          <ol class="steps">
+            <li><span>1</span><p><strong>An administrator edits the Google Sheet.</strong><br />Each row represents one scheduled event.</p></li>
+            <li><span>2</span><p><strong>Google publishes the sheet as CSV.</strong><br />The public CSV contains the same rows and column headers.</p></li>
+            <li><span>3</span><p><strong>The schedule reads that CSV on every visit.</strong><br />Visitors receive current data without rebuilding the Astro site.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="events" class="guide-section">
+        <p class="section-number">02</p>
+        <div>
+          <h2>Add or update an event</h2>
+          <h3>Add a new event</h3>
+          <ol class="checklist">
+            <li>Find an existing event row inside the schedule table near the new event’s date.</li>
+            <li><strong>Insert a row inside the table.</strong> On desktop, right-click the row number and choose <em>Insert 1 row above</em> or <em>Insert 1 row below</em>. In the Sheets app, tap the row number and use the insert-above or insert-below action.</li>
+            <li>Confirm the new row remains inside the table and inherits its formatting or dropdowns. Do not type the event into the first blank row beneath the table; that row may fall outside the published table range.</li>
+            <li>Fill in the event fields across the new row. If <code>id</code> does not populate automatically, enter a unique value that follows the existing pattern—never reuse another event’s ID.</li>
+            <li>Use <code>YYYY-MM-DD</code> for dates and a time such as <code>6:00 PM</code>.</li>
+            <li>For an unknown time, leave <code>start_time</code> empty and set <code>time_tbd</code> to <code>1</code>.</li>
+            <li>Refresh the public schedule and confirm the event card.</li>
+          </ol>
+          <p class="note">The website sorts events by date and time, so the row’s exact position does not control its public order. Inserting it near the correct date simply keeps the spreadsheet easier to maintain.</p>
+
+          <h3>Edit an existing event</h3>
+          <ol class="checklist">
+            <li>Find the event’s existing row inside the schedule table.</li>
+            <li>Edit only the applicable cells in that row. Keep its existing <code>id</code>.</li>
+            <li>Do not rename, remove, or rearrange the header-row columns.</li>
+            <li>Refresh the public schedule and confirm the updated event card.</li>
+          </ol>
+          <p class="note">Google’s published CSV may take a short time to reflect a saved change. If the old value remains, wait a minute and refresh again.</p>
+        </div>
+      </section>
+
+      <section id="streams" class="guide-section">
+        <p class="section-number">03</p>
+        <div>
+          <h2>Add a game stream</h2>
+          <p>When a broadcast link becomes available, paste the complete address into the event’s existing <code>stream_url</code> cell. Clear that cell to remove the stream action from the public schedule.</p>
+          <div class="example-row" aria-label="Example spreadsheet values">
+            <span><small>id</small>cel-2627-018</span>
+            <span><small>opponent_event</small>Parkway</span>
+            <span class="wide"><small>stream_url</small>https://youtube.com/watch?v=example</span>
+          </div>
+          <ul class="plain-list">
+            <li>Empty cell: no stream action appears.</li>
+            <li>YouTube link: a red <strong>YouTube</strong> action appears.</li>
+            <li>Other valid web link: a <strong>Watch stream</strong> action appears.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="fields" class="guide-section">
+        <p class="section-number">04</p>
+        <div>
+          <h2>Common field reference</h2>
+          <div class="field-grid">
+            <article><code>date</code><p>Event date in <strong>YYYY-MM-DD</strong> format.</p></article>
+            <article><code>start_time</code><p>Starting time with AM or PM.</p></article>
+            <article><code>time_tbd</code><p>Use <strong>1</strong> for TBD; otherwise use <strong>0</strong>.</p></article>
+            <article><code>sport</code><p>Basketball, Bowling, Wrestling, Swimming, and so on.</p></article>
+            <article><code>team</code><p>Boys, Girls, Combined, or Unspecified.</p></article>
+            <article><code>level</code><p>MS, Varsity, JV/Varsity, or Unspecified.</p></article>
+            <article><code>opponent_event</code><p>Opponent or meet/tournament name.</p></article>
+            <article><code>home_away</code><p>Use Home or Away to power the quick filters.</p></article>
+            <article><code>venue</code><p>Optional facility or location detail.</p></article>
+            <article><code>timing_note</code><p>Optional note such as “Varsity follows.”</p></article>
+            <article><code>stream_url</code><p>Optional full URL for a live broadcast.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="troubleshooting" class="guide-section">
+        <p class="section-number">05</p>
+        <div>
+          <h2>Troubleshooting</h2>
+          <details><summary>A spreadsheet change is not showing.</summary><p>Confirm the edit was made on the published tab, wait briefly for Google’s CSV cache, and reload the page. Keep the original header names unchanged.</p></details>
+          <details><summary>A stream button is missing.</summary><p>Confirm the header is <code>stream_url</code> and the cell begins with <code>https://</code>. The link must be in the same row as the event.</p></details>
+          <details><summary>An event appears under the wrong filter.</summary><p>Check the exact values in <code>sport</code>, <code>team</code>, <code>level</code>, and <code>home_away</code>. Spelling and capitalization should stay consistent.</p></details>
+          <details><summary>The sponsor artwork needs to change.</summary><p>Replace <code>public/sponsor-banner.svg</code> in the GitHub repository, commit, and push. Unlike spreadsheet edits, this change does trigger a site deployment.</p></details>
+          <p class="privacy-note"><strong>Remember:</strong> the published CSV is public. Do not place private contact information, internal notes, credentials, or unannounced sensitive details in published columns.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="shell"><span>Go Bulldogs</span><div class="footer-meta"><p>Administrator guide for the public athletics schedule.</p><a href={base}>Return to schedule</a></div></div></footer>
+  </body>
+</html>

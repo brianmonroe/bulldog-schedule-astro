@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build && npm run minify:css",
-    "minify:css": "esbuild public/styles.css --minify --outfile=dist/styles.css && esbuild public/print.css --minify --outfile=dist/print.css",
+    "minify:css": "esbuild public/styles.css --minify --outfile=dist/styles.css && esbuild public/print.css --minify --outfile=dist/print.css && esbuild public/guide.css --minify --outfile=dist/guide.css",
     "preview": "astro preview"
   },
   "devDependencies": {
