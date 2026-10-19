@@ -1,6 +1,6 @@
 ---
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPpyrUb-lQhr3epqEU3A-a2vVk46o9tlKcO7PKKG41dDoZe77wQ5M0GNYRSas6KU8BIoHZtlF0jC81/pub?gid=1559160550&single=true&output=csv';
-const base = import.meta.env.BASE_URL;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 
 <!doctype html>
