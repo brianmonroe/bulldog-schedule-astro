@@ -1,4 +1,9 @@
-const state = { events: [], quick: "all" };
+const params = new URLSearchParams(window.location.search);
+const state = {
+  events: [],
+  quick: "all",
+  view: params.get("view") === "week" ? "week" : "upcoming",
+};
 const $ = (s) => document.querySelector(s);
 const els = {
   events: $("#events"),
@@ -68,6 +73,12 @@ const todayKey = () => {
     p = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 };
+const daysFromTodayKey = (days) => {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  const p = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+};
 function eventTime(e) {
   if (e.time_tbd === "1" || !e.start_time) return "TBD";
   const [time, period] = e.start_time.split(" ");
@@ -112,8 +123,10 @@ function card(e) {
 }
 function render() {
   const q = els.search.value.trim().toLowerCase();
+  const weekEnd = state.view === "week" ? daysFromTodayKey(6) : null;
   const filtered = state.events.filter(
     (e) =>
+      (!weekEnd || e.date <= weekEnd) &&
       (!q ||
         [e.opponent_event, e.venue, e.sport, e.team, e.notes]
           .join(" ")
@@ -133,7 +146,7 @@ function render() {
         `<section class="date-group ${date === todayKey() ? "today" : ""}"><h3><span>${date === todayKey() ? "Today · " : ""}${fullDate(date)}</span></h3><div class="event-list">${events.map(card).join("")}</div></section>`,
     )
     .join("");
-  els.count.textContent = `${filtered.length} event${filtered.length === 1 ? "" : "s"}`;
+  els.count.textContent = `${filtered.length} event${filtered.length === 1 ? "" : "s"}${state.view === "week" ? " · Next 7 days" : ""}`;
   els.empty.hidden = filtered.length > 0;
   els.clear.hidden =
     !q &&
@@ -184,7 +197,7 @@ async function load() {
     });
     if (!response.ok) throw Error(response.status);
     state.events = parseCSV(await response.text())
-      .filter((e) => e.date)
+      .filter((e) => e.date && e.date >= todayKey())
       .sort((a, b) =>
         `${a.date} ${a.start_time}`.localeCompare(`${b.date} ${b.start_time}`),
       );

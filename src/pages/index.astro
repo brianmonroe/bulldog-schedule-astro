@@ -1,4 +1,6 @@
 ---
+import boosterImage from '../images/2026-football-celina-vs-bath-160.webp';
+
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPpyrUb-lQhr3epqEU3A-a2vVk46o9tlKcO7PKKG41dDoZe77wQ5M0GNYRSas6KU8BIoHZtlF0jC81/pub?gid=1559160550&single=true&output=csv';
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
@@ -67,9 +69,41 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
         <div id="events" class="events" aria-live="polite"></div>
         <div id="empty" class="status-card" hidden><p><strong>No events match those filters.</strong><br />Try broadening your search.</p><button type="button" id="reset">Reset filters</button></div>
       </section>
+
+      <section class="booster-cta shell" aria-labelledby="booster-title" style={`--booster-image: url(${boosterImage.src})`}>
+        <div>
+          <p class="booster-kicker">Celina Athletic Booster Club</p>
+          <h2 id="booster-title">Join &amp; Support the Dogs</h2>
+          <p>Help provide equipment, opportunities, and support for Celina student-athletes.</p>
+        </div>
+        <a href="https://www.celinaschools.org/A_BoosterClub.aspx" target="_blank" rel="noopener noreferrer">Become a Booster <span aria-hidden="true">→</span></a>
+      </section>
     </main>
 
-    <footer><div class="shell"><span>Go Bulldogs</span><div class="footer-meta"><p>Schedules are subject to change. </p><a href={`${base}guide/`}>Admin guide</a></div></div></footer>
+    <footer>
+      <div class="shell footer-grid">
+        <div class="footer-brand">
+          <span>Go Bulldogs</span>
+          <p>Schedules are subject to change.</p>
+        </div>
+        <nav class="footer-resources" aria-label="Celina resources">
+          <p>Helpful links</p>
+          <a href="https://www.celinaschools.org/" target="_blank" rel="noopener noreferrer">Celina Schools Website <span aria-hidden="true">↗</span></a>
+          <a href="https://www.facebook.com/CelinaAthletics/" target="_blank" rel="noopener noreferrer">Celina Athletics Facebook Page <span aria-hidden="true">↗</span></a>
+          <a href="https://www.facebook.com/CelinaSchools/" target="_blank" rel="noopener noreferrer">Celina Schools Facebook Page <span aria-hidden="true">↗</span></a>
+        </nav>
+        <div class="footer-meta">
+          <div>
+            <p>Schedule views</p>
+            <a href={`${base}?view=week`}>Next 7 days</a>
+          </div>
+          <div>
+            <p>Administration</p>
+            <a href={`${base}guide/`}>Admin guide</a>
+          </div>
+        </div>
+      </div>
+    </footer>
     <script is:inline src={`${base}schedule.js`}></script>
   </body>
 </html>
