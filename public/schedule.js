@@ -158,17 +158,31 @@ function render() {
     !els.team.value &&
     state.quick === "all";
 }
-function fill(id, key, label) {
+function fill(id, key, label, options = {}) {
   const values = [
     ...new Set(
       state.events.map((e) => e[key]).filter((v) => v && v !== "Unspecified"),
     ),
-  ].sort();
+  ].sort((a, b) => {
+    const aIndex = options.order?.indexOf(a) ?? -1;
+    const bIndex = options.order?.indexOf(b) ?? -1;
+    if (aIndex !== -1 || bIndex !== -1) {
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+      return aIndex - bIndex;
+    }
+    return a.localeCompare(b);
+  });
   $(id).insertAdjacentHTML(
     "beforeend",
-    values.map((v) => `<option value="${esc(v)}">${esc(v)}</option>`).join(""),
+    values
+      .map(
+        (v) =>
+          `<option value="${esc(v)}">${esc(options.labels?.[v] || v)}</option>`,
+      )
+      .join(""),
   );
-  $(id).firstElementChild.textContent = `All ${label}`;
+  $(id).firstElementChild.textContent = options.allLabel || `All ${label}`;
 }
 function reset() {
   els.search.value = els.sport.value = els.level.value = els.team.value = "";
@@ -205,8 +219,14 @@ async function load() {
         `${a.date} ${a.start_time}`.localeCompare(`${b.date} ${b.start_time}`),
       );
     fill("#sport", "sport", "sports");
-    fill("#level", "level", "levels");
-    fill("#team", "team", "teams");
+    fill("#level", "level", "levels", {
+      order: ["Varsity", "JV/Varsity", "MS"],
+      labels: { MS: "Middle School" },
+      allLabel: "All Levels",
+    });
+    fill("#team", "team", "teams", {
+      order: ["Boys", "Girls", "Combined"],
+    });
     els.loading.hidden = true;
     render();
   } catch (error) {
