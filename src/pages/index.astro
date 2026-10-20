@@ -1,8 +1,18 @@
 ---
+import { getImage } from 'astro:assets';
 import boosterImage from '../images/2026-football-celina-vs-bath-160.webp';
 
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQPpyrUb-lQhr3epqEU3A-a2vVk46o9tlKcO7PKKG41dDoZe77wQ5M0GNYRSas6KU8BIoHZtlF0jC81/pub?gid=1559160550&single=true&output=csv';
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const { view = 'upcoming' } = Astro.props;
+const isWeek = view === 'week';
+const pageTitle = isWeek ? 'Celina Bulldogs — Next 7 Days' : 'Celina Bulldogs Winter Sports Schedule';
+const pageDescription = isWeek
+  ? 'See Celina Bulldogs athletic events happening today and over the next seven days.'
+  : 'Browse today and upcoming Celina Bulldogs athletic events, times, opponents, and venues.';
+const pageUrl = new URL(isWeek ? `${base}week/` : base, Astro.site ?? Astro.url.origin);
+const socialImage = await getImage({ src: boosterImage, width: 1200, height: 630, fit: 'cover', format: 'jpeg' });
+const socialImageUrl = new URL(socialImage.src, Astro.site ?? Astro.url.origin);
 ---
 
 <!doctype html>
@@ -10,16 +20,31 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Celina Bulldogs athletics schedule — browse upcoming games, meets, and matches." />
+    <meta name="description" content={pageDescription} />
     <meta name="theme-color" content="#063f2e" />
-    <title>Bulldog Schedule</title>
+    <link rel="canonical" href={pageUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Celina Bulldogs" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Celina Bulldogs football players taking the field" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <title>{pageTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href={`${base}styles.css`} />
     <link rel="stylesheet" href={`${base}print.css`} />
   </head>
-  <body data-csv-url={csvUrl}>
+  <body data-csv-url={csvUrl} data-view={view}>
     <main>
       <section class="hero shell">
         <p class="eyebrow">Celina Bulldogs</p>
@@ -95,7 +120,7 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
         <div class="footer-meta">
           <div>
             <p>Schedule views</p>
-            <a href={`${base}?view=week`}>Next 7 days</a>
+            <a href={`${base}week/`}>Next 7 days</a>
           </div>
           <div>
             <p>Administration</p>

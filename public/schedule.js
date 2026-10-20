@@ -2,7 +2,10 @@ const params = new URLSearchParams(window.location.search);
 const state = {
   events: [],
   quick: "all",
-  view: params.get("view") === "week" ? "week" : "upcoming",
+  view:
+    document.body.dataset.view === "week" || params.get("view") === "week"
+      ? "week"
+      : "upcoming",
 };
 const $ = (s) => document.querySelector(s);
 const els = {
