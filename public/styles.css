@@ -25,6 +25,16 @@ input,
 select {
   font: inherit;
 }
+.link-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .shell {
   width: min(1120px, calc(100% - 32px));
   margin-inline: auto;
@@ -64,7 +74,7 @@ select {
 }
 .hero h1 {
   margin: 0;
-  font: 600 clamp(54px, 16vw, 108px)/0.88 Oswald;
+  font: 600 clamp(40px, 13vw, 108px)/0.88 Oswald;
   text-transform: uppercase;
   letter-spacing: -0.035em;
 }
@@ -590,6 +600,11 @@ footer p {
   font-size: 12px;
   font-weight: 600;
   text-decoration: none;
+}
+.footer-resources a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 .footer-resources a:hover,
 .footer-meta a:hover {

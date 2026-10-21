@@ -65,6 +65,8 @@
 
 .legal-back {
   display: inline-flex;
+  align-items: center;
+  gap: 7px;
   margin-top: 40px;
   border-radius: 7px;
   padding: 11px 15px;
