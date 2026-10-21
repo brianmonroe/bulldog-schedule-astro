@@ -1,0 +1,53 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Privacy policy for the independently published Celina Bulldogs schedule." />
+    <meta name="theme-color" content="#063f2e" />
+    <title>Privacy Policy | Celina Bulldogs Schedule</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href={`${base}styles.css`} />
+    <link rel="stylesheet" href={`${base}legal.css`} />
+  </head>
+  <body>
+    <main class="legal-page shell">
+      <header class="legal-header">
+        <p class="eyebrow">Site information</p>
+        <h1>Privacy Policy</h1>
+        <p>Last updated October 21, 2026</p>
+      </header>
+
+      <div class="legal-content">
+        <section>
+          <h2>Information we collect</h2>
+          <p>This site does not provide user accounts, accept form submissions, or intentionally collect personal information from visitors. It does not currently use advertising trackers or analytics cookies.</p>
+        </section>
+
+        <section>
+          <h2>Third-party services</h2>
+          <p>The schedule loads public event information from Google Sheets and uses fonts provided by Google. Those services may receive standard technical information, such as an IP address, browser type, and request details, under their own privacy policies.</p>
+          <p>Ticket and stream buttons lead to third-party websites. Their privacy practices and content are controlled by those third parties, not by this site.</p>
+        </section>
+
+        <section>
+          <h2>Server records</h2>
+          <p>The site’s hosting provider may automatically retain routine server logs needed for security, reliability, and delivery of the website. This site does not use those records to build visitor profiles.</p>
+        </section>
+
+        <section>
+          <h2>Changes to this policy</h2>
+          <p>This policy may be revised when the site’s features or services change. The updated date above will be changed when material revisions are published.</p>
+        </section>
+      </div>
+
+      <a class="legal-back" href={base}>← Return to schedule</a>
+    </main>
+  </body>
+</html>

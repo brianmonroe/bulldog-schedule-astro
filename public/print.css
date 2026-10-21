@@ -68,10 +68,11 @@
     color: #111;
   }
   .site-header,
+  .beta-notice,
   .hero,
   .booster-cta,
   .filter-panel,
-  .stream-link,
+  .event-actions,
   footer,
   .status-card {
     display: none !important;
@@ -82,6 +83,55 @@
   }
   .schedule {
     padding: 0;
+  }
+  .schedule-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1.55in;
+    gap: 0.22in;
+    align-items: start;
+  }
+  .schedule-results {
+    display: contents;
+  }
+  .print-heading {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .events {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .sponsor-rail {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column: 2;
+    grid-row: 2;
+    gap: 0.12in;
+    margin: 0;
+    position: static;
+  }
+  .sponsor-rail-title {
+    grid-column: auto;
+    margin: 0;
+    font-size: 7px;
+  }
+  .ad-zone {
+    break-inside: avoid;
+    border-radius: 5px;
+    padding: 0.14in;
+  }
+  .ad-zone::after {
+    top: -12px;
+    right: -4px;
+    font-size: 72px;
+  }
+  .ad-zone span,
+  .ad-zone small {
+    font-size: 6px;
+  }
+  .ad-zone strong {
+    margin: 5px 0 7px;
+    font-size: 14px;
   }
   .section-heading {
     display: none;
@@ -154,8 +204,8 @@
     background: none;
   }
   .event-list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px 8px;
+    grid-template-columns: 1fr;
+    gap: 5px;
   }
   .event-card {
     break-inside: avoid;

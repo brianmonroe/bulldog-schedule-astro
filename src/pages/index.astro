@@ -45,6 +45,12 @@ const socialImageUrl = new URL(socialImage.src, Astro.site ?? Astro.url.origin);
     <link rel="stylesheet" href={`${base}print.css`} />
   </head>
   <body data-csv-url={csvUrl} data-view={view}>
+    <aside class="beta-notice" aria-label="Beta testing notice">
+      <div class="shell">
+        <strong>Beta preview</strong>
+        <p>This schedule is currently being tested. Stream and ticket links are for testing purposes only.</p>
+      </div>
+    </aside>
     <main>
       <section class="hero shell">
         <p class="eyebrow">Celina Bulldogs</p>
@@ -85,14 +91,32 @@ const socialImageUrl = new URL(socialImage.src, Astro.site ?? Astro.url.origin);
           </div>
         </div>
 
-        <div class="print-heading" aria-hidden="true">
-          <div><span class="print-mark">C</span><p><strong>Celina Bulldogs</strong><small>2026–27 Winter Schedule</small></p></div>
-          <p id="print-summary"></p>
+        <div class="schedule-layout">
+          <div class="schedule-results">
+            <div class="print-heading" aria-hidden="true">
+              <div><span class="print-mark">C</span><p><strong>Celina Bulldogs</strong><small>2026–27 Winter Schedule</small></p></div>
+              <p id="print-summary"></p>
+            </div>
+            <div id="loading" class="status-card"><span class="loader"></span><p>Getting the latest schedule…</p></div>
+            <div id="error" class="status-card error" hidden><p><strong>We couldn’t load the schedule.</strong><br />Check your connection and try again.</p><button type="button" id="retry">Try again</button></div>
+            <div id="events" class="events" aria-live="polite"></div>
+            <div id="empty" class="status-card" hidden><p><strong>No events match those filters.</strong><br />Try broadening your search.</p><button type="button" id="reset">Reset filters</button></div>
+          </div>
+
+          <aside class="sponsor-rail" aria-label="Sponsor opportunities">
+            <p class="sponsor-rail-title">Community support</p>
+            <div class="ad-zone ad-zone-primary">
+              <span>Sponsor space</span>
+              <strong>Your business<br />could be here</strong>
+              <small>Square partner placement</small>
+            </div>
+            <div class="ad-zone ad-zone-secondary">
+              <span>Support the Dogs</span>
+              <strong>Local partners<br />make a difference</strong>
+              <small>Future sponsor feature</small>
+            </div>
+          </aside>
         </div>
-        <div id="loading" class="status-card"><span class="loader"></span><p>Getting the latest schedule…</p></div>
-        <div id="error" class="status-card error" hidden><p><strong>We couldn’t load the schedule.</strong><br />Check your connection and try again.</p><button type="button" id="retry">Try again</button></div>
-        <div id="events" class="events" aria-live="polite"></div>
-        <div id="empty" class="status-card" hidden><p><strong>No events match those filters.</strong><br />Try broadening your search.</p><button type="button" id="reset">Reset filters</button></div>
       </section>
 
       <section class="booster-cta shell" aria-labelledby="booster-title" style={`--booster-image: url(${boosterImage.src})`}>
@@ -127,6 +151,13 @@ const socialImageUrl = new URL(socialImage.src, Astro.site ?? Astro.url.origin);
             <a href={`${base}guide/`}>Admin guide</a>
           </div>
         </div>
+      </div>
+      <div class="shell footer-legal">
+        <p>This page is independently published and is not directly affiliated with Celina City Schools.</p>
+        <nav aria-label="Legal information">
+          <a href={`${base}privacy/`}>Privacy Policy</a>
+          <a href={`${base}terms/`}>Terms of Use</a>
+        </nav>
       </div>
     </footer>
     <script is:inline src={`${base}schedule.js`}></script>

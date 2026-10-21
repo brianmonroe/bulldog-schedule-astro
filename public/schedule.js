@@ -117,13 +117,28 @@ function streamAction(e) {
     return "";
   }
 }
+function ticketAction(e) {
+  if (!e.ticket_url) return "";
+
+  try {
+    const url = new URL(e.ticket_url);
+    if (!["http:", "https:"].includes(url.protocol)) return "";
+
+    const eventName = `${e.sport} ${e.home_away === "Home" ? "versus" : "at"} ${e.opponent_event}`;
+    return `<a class="ticket-link" href="${esc(url.href)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(`Buy tickets: ${eventName}`)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V9a3 3 0 0 0 0 6v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V15a3 3 0 0 0 0-6Z"></path><path d="M13 8.5v1M13 12v1M13 15.5v.5"></path></svg><span>Buy Tickets</span></a>`;
+  } catch {
+    return "";
+  }
+}
 function card(e) {
   const notes = [
     e.venue,
     e.event_type !== "Regular Season" && e.event_type,
   ].filter(Boolean);
-  return `<article class="event-card"><div class="time">${eventTime(e)}</div><div class="event-main"><div class="event-top"><h4>${title(e)}</h4><span class="location-badge ${e.home_away.toLowerCase()}">${esc(e.home_away || "Event")}</span></div><p class="event-meta"><span>${esc(e.sport)}</span><span>${esc(e.level === "Unspecified" ? "Level TBD" : e.level)}</span>${notes.map((x) => `<span>${esc(x)}</span>`).join("")}</p>${e.timing_note ? `<p class="event-note">${esc(e.timing_note)}</p>` : ""}${streamAction(e)}</div></article>`;
+  const actions = [ticketAction(e), streamAction(e)].filter(Boolean).join("");
+  return `<article class="event-card"><div class="time">${eventTime(e)}</div><div class="event-main"><div class="event-top"><h4>${title(e)}</h4><span class="location-badge ${e.home_away.toLowerCase()}">${esc(e.home_away || "Event")}</span></div><p class="event-meta"><span>${esc(e.sport)}</span><span>${esc(e.level === "Unspecified" ? "Level TBD" : e.level)}</span>${notes.map((x) => `<span>${esc(x)}</span>`).join("")}</p>${e.timing_note ? `<p class="event-note">${esc(e.timing_note)}</p>` : ""}${actions ? `<div class="event-actions">${actions}</div>` : ""}</div></article>`;
 }
+let renderTimer;
 function render() {
   const q = els.search.value.trim().toLowerCase();
   const weekEnd = state.view === "week" ? daysFromTodayKey(6) : null;
@@ -143,20 +158,40 @@ function render() {
   const groups = Object.groupBy
     ? Object.groupBy(filtered, (e) => e.date)
     : filtered.reduce((a, e) => ((a[e.date] ??= []).push(e), a), {});
-  els.events.innerHTML = Object.entries(groups)
+  const eventMarkup = Object.entries(groups)
     .map(
       ([date, events]) =>
         `<section class="date-group ${date === todayKey() ? "today" : ""}"><h3><span>${date === todayKey() ? "Today · " : ""}${fullDate(date)}</span></h3><div class="event-list">${events.map(card).join("")}</div></section>`,
     )
     .join("");
-  els.count.textContent = `${filtered.length} event${filtered.length === 1 ? "" : "s"}${state.view === "week" ? " · Next 7 days" : ""}`;
-  els.empty.hidden = filtered.length > 0;
-  els.clear.hidden =
-    !q &&
-    !els.sport.value &&
-    !els.level.value &&
-    !els.team.value &&
-    state.quick === "all";
+  const commit = () => {
+    els.events.innerHTML = eventMarkup;
+    els.count.textContent = `${filtered.length} event${filtered.length === 1 ? "" : "s"}${state.view === "week" ? " · Next 7 days" : ""}`;
+    els.empty.hidden = filtered.length > 0;
+    els.clear.hidden =
+      !q &&
+      !els.sport.value &&
+      !els.level.value &&
+      !els.team.value &&
+      state.quick === "all";
+  };
+
+  clearTimeout(renderTimer);
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || !els.events.children.length) {
+    els.events.classList.remove("is-filtering");
+    els.events.removeAttribute("aria-busy");
+    commit();
+    return;
+  }
+
+  els.events.setAttribute("aria-busy", "true");
+  els.events.classList.add("is-filtering");
+  renderTimer = setTimeout(() => {
+    commit();
+    els.events.classList.remove("is-filtering");
+    els.events.removeAttribute("aria-busy");
+  }, 110);
 }
 function fill(id, key, label, options = {}) {
   const values = [
